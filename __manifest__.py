@@ -6,6 +6,7 @@
     'author': 'Janani',
     'depends': ['base', 'product'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/product_details_views.xml'
     ],

@@ -12,9 +12,12 @@ class ProductDetails(models.Model):
         'product_id',                 # Source column
         'mfg_product_id',              # Target column
         string="Mfg#",compute='_compute_mfg_ids',
-        store=True)
+        store=True,
+        help="Populated from vendor product codes matching default codes of other products")
+
     filter_by_product=fields.Many2one("product.template", string="Filter by product")
-    active_status=fields.Selection([("active","Active"),("inactive","Inactive")],string="Active")
+    active_status=fields.Selection([("active","Active"),("inactive","Inactive")],string="Custom Active Status")
+
 
     @api.onchange('filter_by_product')
     def _onchange_filter_by_product(self):
@@ -33,17 +36,12 @@ class ProductDetails(models.Model):
                 self.active_status = product.active_status
                 self.mfg_ids = [(6, 0, product.mfg_ids.ids)]
 
-
     @api.depends('seller_ids.product_code')
     def _compute_mfg_ids(self):
-        for product in self:
-            codes = product.seller_ids.mapped('product_code')
-            codes = list(filter(None, codes))
+        for rec in self:
+            product_codes = rec.seller_ids.mapped('product_code')
+            matched_templates = self.env['product.template'].search([
+                ('default_code', 'in', product_codes)
+            ])
+            rec.mfg_ids = [(6, 0, matched_templates.ids)]
 
-            if codes:
-                matching_products = self.env['product.template'].search([
-                    ('default_code', 'in', codes)
-                ])
-                product.mfg_ids = [(6, 0, matching_products.ids)]
-            else:
-                product.mfg_ids = [(6, 0, [])]
