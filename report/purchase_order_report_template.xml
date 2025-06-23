@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_purchase_order_shipping_address_border"
+              inherit_id="purchase.report_purchaseorder_document">
+
+        <!-- Replace vendor (partner) block with red border -->
+        <xpath expr="//div[@t-field='o.partner_id']" position="replace">
+            <div style="border: 1px solid red; padding: 10px; margin-bottom: 10px;"
+                 t-field="o.partner_id"
+                 t-options='{"widget": "contact", "fields":  ["address", "name", "phone", "vat","email"], "no_marker": True, "phone_icons": True}'/>
+        </xpath>
+
+        <!-- Add outer red border to main table -->
+        <xpath expr="//table[contains(@class, 'o_main_table')]" position="attributes">
+            <attribute name="style">border: 1px solid red; border-collapse: collapse; width: 100%</attribute>
+        </xpath>
+
+        <!-- Add spacing to total row -->
+        <xpath expr="//div[@id='total']" position="attributes">
+            <attribute name="class">row justify-content-end mt-2 mb-0</attribute>
+        </xpath>
+
+    </template>
+</odoo>
