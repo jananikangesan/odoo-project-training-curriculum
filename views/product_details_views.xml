@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
                 <field name="primary_vendor"/>
-                <field name="mfg_ids"/>
+                <field name="mfg_ids"  widget="many2many_tags"/>
             </xpath>
         </field>
     </record>
@@ -24,6 +24,12 @@
              </xpath>
             <xpath expr="//field[@name='categ_id']" position="before">
                 <field name="primary_vendor"/>
+                <field name="mfg_ids" widget="many2many_tags"/>
+            </xpath>
+
+            <xpath expr="//page[@name='sales']" position="after">
+                <page string="ODOO Purchase Info">
+                </page>
             </xpath>
         </field>
     </record>
