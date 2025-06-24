@@ -18,6 +18,7 @@ class ProductDetails(models.Model):
     filter_by_product=fields.Many2one("product.template", string="Filter by product")
     active_status=fields.Selection([("active","Active"),("inactive","Inactive")],string="Custom Active Status")
 
+    purchase_order_ids = fields.One2many('purchase.order.line', 'product_tmpl_id', string="Purchase Order")
 
     @api.onchange('filter_by_product')
     def _onchange_filter_by_product(self):

@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_template,product.template,model_product_template,,1,1,1,1
+access_product_template,product.template,model_product_template,,1,0,0,0
 access_product_template_ontash_manager,access.product.template.manager,model_product_template,ONT_INV.group_ontash_manager,1,1,1,1
 access_product_template_ontash_guest,access.product.template.guest,model_product_template,ONT_INV.group_ontash_guest,1,0,0,0

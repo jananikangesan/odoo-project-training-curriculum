@@ -1,1 +1,1 @@
-from . import product_details
+from . import product_details,purchase_order_details
